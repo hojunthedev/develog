@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 //컨트롤러 -> 요청에 대한 응답(HTML)
 //@Controller
-// 컨트롤러 -> 요청에 대한 응답(Data)
+
+// REST컨트롤러 -> 요청에 대한 응답(Data)
 @RestController
 public class HttpControllerTest {
 	
 	private static final String TAG = "HttpControllerTest";
 	
+	// localhost:8000/develog/http/lombok
 	@GetMapping("/http/lombok")
 	public String lombokTest() {
 		//빌더 패턴_1.순서를 지키지 않아도 된다/2.초기화 하고싶은 멤버만 초기화 가능
