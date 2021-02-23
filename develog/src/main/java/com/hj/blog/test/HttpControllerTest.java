@@ -13,6 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HttpControllerTest {
 	
+	private static final String TAG = "HttpControllerTest";
+	
+	@GetMapping("/http/lombok")
+	public String lombokTest() {
+		//빌더 패턴_1.순서를 지키지 않아도 된다/2.초기화 하고싶은 멤버만 초기화 가능
+		Member m = Member.builder().username("ssar").password("1234").email("ghwnsGMAIL").build();
+		System.out.println(TAG + "getter : " + m.getUsername());
+		m.setUsername("hojun");
+		System.out.println(TAG + "setter : " + m.getUsername());
+		return "lombok test 완료";
+	}
+	
 	// 인터넷 브라우저 요청은 무조건 get요청밖에 할 수 없다
 	// http://localhost:8080/http/get (select)
 	@GetMapping("/http/get")
