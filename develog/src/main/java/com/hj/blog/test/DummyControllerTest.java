@@ -30,7 +30,7 @@ public class DummyControllerTest {
 	// save 함수는 id를 전달하면 해당 id에 대한 데이터가 있으면 update를 해주고
 	// save 함수는 id를 전달할때 해당 id에 대한 데이터가 없으면 insert를 해준다.
 	// email, password
-	@Transactional
+	@Transactional // 함수 종료시에 자동 commit됨.
 	@PutMapping("/dummy/user/{id}")
 	public User updateUser(@PathVariable int id, @RequestBody User requestUser) { //json데이터를 요청 => Java Object (M.C의 JACKSON라이브러리가 변환해서 받아준다)
 		System.out.println("id : " + id);
@@ -45,6 +45,8 @@ public class DummyControllerTest {
 		
 		// 1.save함수 사용 / 2.@Transactional 어노테이션 사용
 		// userRepository.save(user);
+		
+		// 더티 체킹
 		return null;
 	}
 	
