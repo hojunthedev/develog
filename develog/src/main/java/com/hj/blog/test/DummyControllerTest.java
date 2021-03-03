@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,17 @@ public class DummyControllerTest {
 	
 	@Autowired //UserRepository 타입으로 스프링이 관리하고있으면(메모리에 떠있으면) 같이 메모리에 띄워줘라(의존성 주입, DI)
 	private UserRepository userRepository;
+	
+	@DeleteMapping("/dummy/user/{id}")
+	public String delete(@PathVariable int id) {
+		try {
+			userRepository.deleteById(id);
+		} catch(EmptyResultDataAccessException e) {
+			return "삭제에 실패하였습니다. 해당 id는 DB에 존재하지 않습니다.";
+		}
+		
+		return "삭제되었습니다. id : " + id;
+	}
 	
 	// save 함수는 id를 전달하지 않으면 insert를 하고
 	// save 함수는 id를 전달하면 해당 id에 대한 데이터가 있으면 update를 해주고
