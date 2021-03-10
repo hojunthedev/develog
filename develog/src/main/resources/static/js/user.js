@@ -28,7 +28,7 @@ let index ={
 				// 성공시
 				alert("회원가입이 완료되었습니다.");
 				console.log(resp);
-				//location.href = "/develog";
+				location.href = "/develog";
 			}).fail(function(err){
 				// 실패
 				alert(JSON.stringify(err));
