@@ -19,8 +19,8 @@ public class UserApiController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired //세션 객체는 스프링 컨테이너가 빈으로 가지고있다.
-	private HttpSession session;
+//	@Autowired //세션 객체는 스프링 컨테이너가 빈으로 가지고있다.
+//	private HttpSession session;
 	
 	@PostMapping("/api/user")
 	public ResponseDto<Integer> save(@RequestBody User user) {
@@ -31,14 +31,16 @@ public class UserApiController {
 	}
 	
 	// TODO: 스프링 시큐리티를 이용해 로그인
-	@PostMapping("/api/user/login")
-	public ResponseDto<Integer> login(@RequestBody User user){ //매개변수에 httpsession 직접 적어도되고
-		System.out.println("UserApiController : login 호출됨");
-		User principal = userService.로그인(user); // principal (접근주체)
-		
-		if(principal != null) {
-			session.setAttribute("principal", principal);
-		}
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
-	}
+//	@PostMapping("/api/user/login")
+//	public ResponseDto<Integer> login(@RequestBody User user){ //매개변수에 httpsession 직접 적어도되고
+//		System.out.println("UserApiController : login 호출됨");
+//		User principal = userService.로그인(user); // principal (접근주체)
+//		
+//		if(principal != null) {
+//			session.setAttribute("principal", principal);
+//		}
+//		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
+//	}
+	
+	
 }
