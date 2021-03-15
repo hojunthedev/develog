@@ -30,6 +30,7 @@ public class UserApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
+	// TODO: 스프링 시큐리티를 이용해 로그인
 	@PostMapping("/api/user/login")
 	public ResponseDto<Integer> login(@RequestBody User user){ //매개변수에 httpsession 직접 적어도되고
 		System.out.println("UserApiController : login 호출됨");
