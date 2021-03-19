@@ -24,22 +24,4 @@ public class BoardApiController {
 		boardService.글쓰기(board, principal.getUser());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
-	
-	
-	
-	
-	
-// 전통적인 방식의 로그인
-//	@PostMapping("/api/user/login")
-//	public ResponseDto<Integer> login(@RequestBody User user){ //매개변수에 httpsession 직접 적어도되고
-//		System.out.println("UserApiController : login 호출됨");
-//		User principal = userService.로그인(user); // principal (접근주체)
-//		
-//		if(principal != null) {
-//			session.setAttribute("principal", principal);
-//		}
-//		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
-//	}
-	
-	
 }

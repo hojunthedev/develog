@@ -1,6 +1,8 @@
 package com.hj.blog.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,10 +27,8 @@ public class BoardService {
 		boardRepository.save(board);
 	}
 	
-	
-	
-//	@Transactional(readOnly = true) // select 시 트랜잭션 시작, 서비스 종료시 트랜잭션 종료(정합성)
-//	public User 로그인(User user) {
-//		return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-//	}
+	public List<Board> 글목록(){
+		return boardRepository.findAll();
+	}
+
 }
