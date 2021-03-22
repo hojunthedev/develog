@@ -47,4 +47,14 @@ public class BoardService {
 		boardRepository.delete(board);
 	}
 
+	@Transactional
+	public void 글수정하기(int id, Board requestBoard) {
+		Board board = boardRepository.findById(id)
+				.orElseThrow(() -> {
+					return new IllegalArgumentException("글 찾기 실패 : 해당 글이 존재하지 않습니다.");
+		}); // 영속화 완료
+		board.setTitle(requestBoard.getTitle());
+		board.setContent(requestBoard.getContent());
+		// 해당 함수로 종료시에 (트랜젝션이 service가 종료될 때) 더티체킹 -> 자동 업데이트(db flush/commit)
+	}
 }
