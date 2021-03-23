@@ -4,6 +4,9 @@ let index ={
 			$("#btn-save").on("click", () => { //this를 바인딩하기 위해 람다식을 사용한다 
 				this.save(); //함수로 사용하면 이곳에서의 this는 윈도우함수를 가르키기 때문 
 			});
+			$("#btn-update").on("click", () => { //this를 바인딩하기 위해 람다식을 사용한다 
+				this.update(); //함수로 사용하면 이곳에서의 this는 윈도우함수를 가르키기 때문 
+			});
 			
 //0315 폐지
 //			$("#btn-login").on("click", () => { 
@@ -33,6 +36,30 @@ let index ={
 			}).done(function(resp){
 				// 성공시
 				alert("회원가입이 완료되었습니다.");
+				console.log(resp);
+				location.href = "/";
+			}).fail(function(err){
+				// 실패
+				alert(JSON.stringify(err));
+			});
+		},
+		
+		update: function(){
+			let data = {
+					id:$("#id").val(),
+					password: $("#password").val(),
+					email: $("#email").val()
+			};
+			
+			$.ajax({
+				type: "PUT",
+				url: "/user",
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json" 
+			}).done(function(resp){
+				// 성공시
+				alert("회원정보수정이 완료되었습니다.");
 				console.log(resp);
 				location.href = "/";
 			}).fail(function(err){
