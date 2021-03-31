@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hj.blog.model.KakaoProfile;
 import com.hj.blog.model.OAuthToken;
 
 // 인증이 안된 사용자들이 출입할 수 있는 경로를 /auth -허용
@@ -101,6 +102,21 @@ public class UserController {
 			kakaoProfileRequest2,
 			String.class
 		);
+
+		ObjectMapper objectMapper2 = new ObjectMapper();
+		KakaoProfile kakaoProfile = null;
+		try {
+			kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("카카오 아이디(번호):" + kakaoProfile.getId());
+		System.out.println("카카오 이메일:" + kakaoProfile.getKakao_account().getEmail());
 		
 		return response2.getBody();
 	}
