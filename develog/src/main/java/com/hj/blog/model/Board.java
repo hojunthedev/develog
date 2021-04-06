@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -51,6 +52,7 @@ public class Board {
 	// "board" 는 필드이름. Reply테이블의 필드이름을 적으면 됨
 	//@JoinColumn 데이터베이스 1정규형 규칙(원자성)을 깨버림. 하면안됨.
 	@JsonIgnoreProperties({"board"}) // 무한참조방지방법중 하나. Jackson이 파싱할때, getter를 호출하는데, 게터를 호출하지 않게 함
+	@OrderBy("id desc")
 	private List<Reply> replys;
 	
 	@CreationTimestamp

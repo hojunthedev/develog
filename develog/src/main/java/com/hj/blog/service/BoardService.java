@@ -7,9 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hj.blog.config.auth.PrincipalDetail;
+import com.hj.blog.dto.ReplySaveRequestDto;
 import com.hj.blog.model.Board;
+import com.hj.blog.model.Reply;
 import com.hj.blog.model.User;
 import com.hj.blog.repository.BoardRepository;
+import com.hj.blog.repository.ReplyRepository;
+import com.hj.blog.repository.UserRepository;
 
 @Service
 public class BoardService {
@@ -17,6 +21,12 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
+	
 	@Transactional
 	public void 글쓰기(Board board, User user) {// title, content
 		board.setCount(0);
@@ -56,5 +66,34 @@ public class BoardService {
 		board.setTitle(requestBoard.getTitle());
 		board.setContent(requestBoard.getContent());
 		// 해당 함수로 종료시에 (트랜젝션이 service가 종료될 때) 더티체킹 -> 자동 업데이트(db flush/commit)
+	}
+	
+	@Transactional
+	// DTO의 이점 : 필요한 데이터를 한방에 받을수 있지
+	// 영속화가 귀찮을때는 다른 방법도있다.
+	public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto) {
+		
+		User user = userRepository.findById(replySaveRequestDto.getUserId())
+				.orElseThrow(() -> {
+					return new IllegalArgumentException("댓글 쓰기 실패: 유저 id를 찾을 수 없습니다.");
+		}); // 영속화
+		
+		Board board = boardRepository.findById(replySaveRequestDto.getBoardId())
+				.orElseThrow(() -> {
+					return new IllegalArgumentException("댓글 쓰기 실패: 게시글 id를 찾을 수 없습니다.");
+		}); // 영속화
+		
+		
+//		Reply reply = new Reply();
+//		reply.update(user, board, replySaveRequestDto.getContent());
+		
+		Reply reply = Reply.builder()
+				.user(user)
+				.board(board)
+				.content(replySaveRequestDto.getContent())
+				.build();
+		
+		//더티체킹의 대상이 아님! board는 타입을 맞춰주기위한 select일뿐
+		replyRepository.save(reply);
 	}
 }
