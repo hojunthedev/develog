@@ -15,17 +15,31 @@ import com.hj.blog.repository.BoardRepository;
 import com.hj.blog.repository.ReplyRepository;
 import com.hj.blog.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BoardService {
 
-	@Autowired
-	private BoardRepository boardRepository;
+	// final은 무조건 초기화가 되어야 하지만
+	// @RequiredArgsConstuctor어노테이션이 초기화가 되어야 하는 친구들을 생성자 파라미터에 넣어서 초기화 시켜준다.
+	private final BoardRepository boardRepository;
+	private final ReplyRepository replyRepository;
 
-	@Autowired
-	private UserRepository userRepository;
+// Autowired의 동작원리
+//	public BoardService(BoardRepository bRepo, ReplyRepository rRepo ) {
+//		this.boardRepository = bRepo;
+//		this.replyRepository = rRepo;
+//	}
 	
-	@Autowired
-	private ReplyRepository replyRepository;
+//	@Autowired
+//	private BoardRepository boardRepository;
+//
+//	@Autowired
+//	private UserRepository userRepository;
+//	
+//	@Autowired
+//	private ReplyRepository replyRepository;
 	
 	@Transactional
 	public void 글쓰기(Board board, User user) {// title, content
