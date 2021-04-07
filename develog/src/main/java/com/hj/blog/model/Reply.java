@@ -42,10 +42,20 @@ public class Reply {
 	
 	@CreationTimestamp
 	private Timestamp createDate;
+
+	// 오브젝트를 출력하게 되면 자동으로 toString이 호출됨
+	@Override
+	public String toString() {
+		return "Reply [id=" + id + ", content=" + content + ", board=" + board + ", user=" + user + ", createDate="
+				+ createDate + "]";
+	}
 	
 //	public void update(User user, Board board, String content) {
 //		setUser(user);
 //		setBoard(board);
 //		setContent(content);
 //	}
+	
+	
+	
 }

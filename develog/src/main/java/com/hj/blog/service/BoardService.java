@@ -73,27 +73,30 @@ public class BoardService {
 	// 영속화가 귀찮을때는 다른 방법도있다.
 	public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto) {
 		
-		User user = userRepository.findById(replySaveRequestDto.getUserId())
-				.orElseThrow(() -> {
-					return new IllegalArgumentException("댓글 쓰기 실패: 유저 id를 찾을 수 없습니다.");
-		}); // 영속화
-		
-		Board board = boardRepository.findById(replySaveRequestDto.getBoardId())
-				.orElseThrow(() -> {
-					return new IllegalArgumentException("댓글 쓰기 실패: 게시글 id를 찾을 수 없습니다.");
-		}); // 영속화
+//		User user = userRepository.findById(replySaveRequestDto.getUserId())
+//				.orElseThrow(() -> {
+//					return new IllegalArgumentException("댓글 쓰기 실패: 유저 id를 찾을 수 없습니다.");
+//		}); // 영속화
+//		
+//		Board board = boardRepository.findById(replySaveRequestDto.getBoardId())
+//				.orElseThrow(() -> {
+//					return new IllegalArgumentException("댓글 쓰기 실패: 게시글 id를 찾을 수 없습니다.");
+//		}); // 영속화
 		
 		
 //		Reply reply = new Reply();
 //		reply.update(user, board, replySaveRequestDto.getContent());
-		
-		Reply reply = Reply.builder()
-				.user(user)
-				.board(board)
-				.content(replySaveRequestDto.getContent())
-				.build();
+//		
+//		Reply reply = Reply.builder()
+//				.user(user)
+//				.board(board)
+//				.content(replySaveRequestDto.getContent())
+//				.build();
 		
 		//더티체킹의 대상이 아님! board는 타입을 맞춰주기위한 select일뿐
-		replyRepository.save(reply);
+		//replyRepository.save(reply);
+		
+		// 네이티브 쿼리 사용
+		replyRepository.mSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(),replySaveRequestDto.getContent());
 	}
 }
