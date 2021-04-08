@@ -3,6 +3,7 @@ package com.hj.blog.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,7 @@ public class Board {
 	@JoinColumn(name="userId")
 	private User user; // DB는 오브젝트를 저장할수 없다, FK, 자바는 오브젝트를 저장할 수 있다.
 	
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy 연관관계의 주인이 아니다.(난 FK가 아니에요) DB에 칼럼을 만들지 마세요 조인의 답만 필요해요
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // mappedBy 연관관계의 주인이 아니다.(난 FK가 아니에요) DB에 칼럼을 만들지 마세요 조인의 답만 필요해요
 	// "board" 는 필드이름. Reply테이블의 필드이름을 적으면 됨
 	//@JoinColumn 데이터베이스 1정규형 규칙(원자성)을 깨버림. 하면안됨.
 	@JsonIgnoreProperties({"board"}) // 무한참조방지방법중 하나. Jackson이 파싱할때, getter를 호출하는데, 게터를 호출하지 않게 함

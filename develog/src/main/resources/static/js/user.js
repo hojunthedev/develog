@@ -34,10 +34,15 @@ let index ={
 				contentType: "application/json; charset=utf-8", //body데이터가 어떤 타입인지(Mime)
 				dataType: "json" // 요청을 서버로해서, 응답이 왔을때 기본적으로 모든것이 문자열 (모양이 json이라면) => javascript, 생략도 가능. ajax의 기본전략
 			}).done(function(resp){
-				// 성공시
-				alert("회원가입이 완료되었습니다.");
-				console.log(resp);
-				location.href = "/";
+				if(resp.status === 500){
+					alert("회원가입에 실패하였습니다.");
+				}else {
+					// 성공시
+					alert("회원가입이 완료되었습니다.");
+					console.log(resp);
+					location.href = "/";
+				}
+
 			}).fail(function(err){
 				// 실패
 				alert(JSON.stringify(err));
