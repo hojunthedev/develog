@@ -113,4 +113,10 @@ public class BoardService {
 		// 네이티브 쿼리 사용
 		replyRepository.mSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(),replySaveRequestDto.getContent());
 	}
+	
+	@Transactional
+	public void 댓글삭제(int replyId) {
+		//TODO : 화면에서 댓글 id를 받아와서 reply테이블에 댓글id와 로그인유저id 로 검색, 캐치하면 통과, 불캐치시 에러
+		replyRepository.deleteById(replyId);
+	}
 }
